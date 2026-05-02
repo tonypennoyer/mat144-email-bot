@@ -1,5 +1,8 @@
 # Customize the feedback messages shown when answers are correct or incorrect.
-# Use {name} to include the recipient's name in any message.
+# Available placeholders:
+#   correct:   {name}
+#   incorrect: {name}, {your_answer}, {answer}, {hint}
+# The full worked solution is always appended below incorrect messages.
 
 correct:
   - "Correct, {name}! Well done."
@@ -7,9 +10,9 @@ correct:
   - "Nailed it, {name}!"
 
 incorrect:
-  - "Not quite, {name}. The answer was {answer}. Here's a hint: {hint}"
-  - "Close, {name}, but not quite. The correct answer is {answer}."
-  - "Keep trying, {name}! The answer was {answer}."
+  - "Not quite, {name}. You answered {your_answer}, but the correct answer is {answer}."
+  - "Close, {name}! You had {your_answer} — the right answer is {answer}."
+  - "Not this time, {name}. You answered {your_answer}; it should be {answer}."
 
 # Email subject lines
 subjects:
