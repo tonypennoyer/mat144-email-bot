@@ -1,0 +1,44 @@
+name: Check Replies and Grade
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch state from bot-state branch
+        run: |
+          git fetch origin bot-state:refs/remotes/origin/bot-state 2>/dev/null || true
+          git checkout origin/bot-state -- data/current_problems.json 2>/dev/null || echo "No state yet."
+
+      - name: Check for replies and grade
+        run: python check_replies.py
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+
+      - name: Push updated state to bot-state branch
+        run: |
+          cp data/current_problems.json /tmp/current_problems.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b bot-state origin/bot-state
+          cp /tmp/current_problems.json data/current_problems.json
+          git add data/current_problems.json
+          git diff --staged --quiet || git commit -m "chore: mark problems graded [skip ci]"
+          git push origin bot-state
