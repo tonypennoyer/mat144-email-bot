@@ -1,0 +1,16 @@
+# Bot configuration
+recipient:
+  name: Tony
+  email: tonypennoyer@gmail.com
+
+# Number of problems per daily email (max 2)
+problems_per_day: 2
+
+# Topic rotation — add or remove topics to control what gets sent
+topics:
+  - combinatorics
+
+# Gmail SMTP settings (credentials loaded from .env)
+smtp:
+  host: smtp.gmail.com
+  port: 587
