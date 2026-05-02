@@ -1,0 +1,38 @@
+name: Send Daily Problems
+
+on:
+  schedule:
+    # 8:00 AM Eastern Time (UTC-4 during daylight saving, UTC-5 in winter)
+    # Adjust the hour here: 12 = 8 AM EDT, 13 = 8 AM EST
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Send daily problems
+        run: python send_daily.py
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+
+      - name: Commit problems file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/current_problems.json
+          git commit -m "chore: save daily problems [skip ci]"
+          git push

@@ -1,0 +1,1 @@
+{"date": "2026-05-02", "problems": [{"question": "A pizza shop offers 5 toppings. How many different 2-topping pizzas can be made?", "answer": 10, "hint": "Use combinations: C(5,2) = 5! / (2! * 3!)."}, {"question": "A committee of 3 is chosen from 7 people. How many different committees are possible?", "answer": 35, "hint": "Use combinations: C(7,3) = 7! / (3! * 4!)."}]}
