@@ -1,0 +1,17 @@
+# Customize the feedback messages shown when answers are correct or incorrect.
+# Use {name} to include the recipient's name in any message.
+
+correct:
+  - "Correct, {name}! Well done."
+  - "That's right, {name}! Keep it up."
+  - "Nailed it, {name}!"
+
+incorrect:
+  - "Not quite, {name}. The answer was {answer}. Here's a hint: {hint}"
+  - "Close, {name}, but not quite. The correct answer is {answer}."
+  - "Keep trying, {name}! The answer was {answer}."
+
+# Email subject lines
+subjects:
+  daily_problem: "Your Daily Discrete Math Problems"
+  grade_response: "Your Results — Daily Discrete Math"
